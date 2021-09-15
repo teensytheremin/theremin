@@ -61,11 +61,31 @@ Eric's oscillator LTSpice model:
 ![LTSpice model](/images/ltspice/differential_osc_2020-10-19.jpg)
 
 
+### BJT differential amplifier current sensing
+
+![LTSpice model](images/ltspice/current_sensing_oscillator_npn_v3_ltspice_model.png)
+
+![KiCAD schematic](images/schematic/current_sensing_oscillator_npn_v3_kicad_schematic.png)
+
+![KiCAD PCB render](images/boards/current_sensing_oscillator_npn_v3_kicad_render.png)
+
+![Test output](images/boards/current_sensing_oscillator_npn_v2_board_test_output.jpg)
+
+![Collected sensor data](images/boards/current_sensing_oscillator_npn_v3_4mh_filter_log.png)
+
+
 ### LT1711 comparator based oscillator
 
 Simple current sensing oscillator with minimum components.
 
 ![LTSpice model](/images/ltspice/current_sensing_oscillator_comparator_simple.png)
+
+Testing of soldered LT1711 oscillator:
+
+![Testing](/images/boards/pipe_monster_teensy4_theremin_parts_lt1711_osc_test.jpg)
+
+Working pretty well except one issue: when hand is touching uninsulated antenna, oscillator switches to very high frequency (10-15MHz instead of working 1MHz) - and does not return to normal oparation even if hand is removed.
+
 
 
 ### LTC6752 based oscillator
