@@ -80,16 +80,35 @@ Simple current sensing oscillator with minimum components.
 
 ![LTSpice model](/images/ltspice/current_sensing_oscillator_comparator_simple.png)
 
+KiCAD schematics:
+
+![Testing](images/schematic/current_sensing_oscillator_singleended_lt1711_pcb_kicad_schematic.png)
+
+PCB Render:
+
+![Testing](images/schematic/current_sensing_oscillator_singleended_lt1711_pcb_render_top.png)
+
+![Testing](images/schematic/current_sensing_oscillator_singleended_lt1711_pcb_render_back.png)
+
 Testing of soldered LT1711 oscillator:
 
 ![Testing](/images/boards/pipe_monster_teensy4_theremin_parts_lt1711_osc_test.jpg)
 
-Working pretty well except one issue: when hand is touching uninsulated antenna, oscillator switches to very high frequency (10-15MHz instead of working 1MHz) - and does not return to normal oparation even if hand is removed.
+![Testing](images/boards/pipe_monster_teensy4_theremin_assembled.jpg)
+
+![Testing](images/boards/pipe_monster_teensy4_theremin_assembled_with_box.jpg)
+
+According to test results, R_sense should be increased from 22 Ohm to 33 or 47.
+
+Working pretty well except one issue: when hand is touching uninsulated antenna, oscillator switches to very high frequency (3-10MHz instead of working 1MHz) - and does not return to normal oparation even if hand is removed.
 
 
 
 ### LTC6752 based oscillator
 
+Another comparator based current sensing oscillator.
+
+Trying to design schematic which allows to experiment with different additional components. The goal is to workaround touch issue found during LT1711 oscillator testing.
 
 ![LTSpice model](/images/ltspice/current_sensing_oscillator_ltc6752_ltspice_model.png)
 
