@@ -8,6 +8,9 @@
 
 ### Color Touch LCD 2.8 inch
 
+## Sensor
+
+![LTSpice model](/images/ltspice/current_sensing_oscillator_ltc6752_ltspice_model.png)
 
 
 You can use the [editor on GitHub](https://github.com/teensytheremin/theremin/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
