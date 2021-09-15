@@ -1,4 +1,4 @@
-## Teensy 4.1 based Digital Theremin Project
+# Teensy 4.1 Digital Theremin
 
 This is an attempt to design good DIY digital [theremin](https://en.wikipedia.org/wiki/Theremin) based on microcontroller.
 
