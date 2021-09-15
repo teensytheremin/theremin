@@ -10,6 +10,8 @@
 
 ## Sensor
 
+* Designing [theremin sensor](sensors.md)
+
 ![LTSpice model](/images/ltspice/current_sensing_oscillator_ltc6752_ltspice_model.png)
 
 
