@@ -1,4 +1,14 @@
-## Welcome to GitHub Pages
+# Teensy 4.1 based Digital Theremin Project
+
+## Components to buy
+
+### Teensy 4.1 MCU board
+
+### Teensy Audio Board revision D
+
+### Color Touch LCD 2.8 inch
+
+
 
 You can use the [editor on GitHub](https://github.com/teensytheremin/theremin/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
