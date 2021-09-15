@@ -1,6 +1,15 @@
 # Teensy 4.1 based Digital Theremin Project
 
+This is an attempt to design good DIY digital [theremin](https://en.wikipedia.org/wiki/Theremin) based on microcontroller.
+
+## Licensing
+
 This is open source open hardware project.
+
+You can freely build device using instructions for personal usage, but cannot sell it.
+
+Firmware is licensed under GPL v2 license.
+
 
 ## Components to buy
 
@@ -10,7 +19,7 @@ Microcontroller board Teensy 4.1 [$26.85 on PJRC.COM](https://www.pjrc.com/store
 
 ![Teensy 4.1 image](images/boards/teensy41_4.jpg)
 
-It's pretty nice microcontroller board for designing of digital theremin.
+It's pretty suitable microcontroller board for designing of digital theremin. Thanks to Paul Stoffregen.
 
 * ARM Cortex-M7 at 600 MHz (overclocking up to 1GHz)
 * Float point math unit, 64 & 32 bits
@@ -29,9 +38,12 @@ It's pretty nice microcontroller board for designing of digital theremin.
 
 Memory can be extended by soldering of additional PSRAM chips (2 x 8MB).
 
+Hardware timer resolution is important for sensitivity of theremin sensor. On teensy, it's working on F_CPU / 4 : 200MHz for 800MHz F_CPU.
+
 ![Teensy 4.1 image](images/boards/teensy41_memory_small.jpg)
 
 For programming, you can use [Teensyduino plugin for Arduino IDE](https://www.pjrc.com/teensy/td_download.html).
+
 
 ### Teensy Audio Board revision D
 
