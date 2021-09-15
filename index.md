@@ -1,4 +1,4 @@
-# Teensy 4.1 Digital Theremin
+# Teensy Digital Theremin
 
 This is an attempt to design good DIY digital [theremin](https://en.wikipedia.org/wiki/Theremin) based on microcontroller.
 
@@ -7,7 +7,7 @@ This project is currently in progress.
 * [Github page](https://github.com/teensytheremin/theremin)
 * [Forum thread](http://thereminworld.com/Forums/T/32640/teensy-40-600mhz-arm-cortex-m-7-mcu---ideal-for-digital-mcu-based-theremin) on thereminworld.com
 
-### Licensing
+## Licensing
 
 This is open source open hardware project.
 
@@ -15,6 +15,7 @@ You can freely build device using instructions for personal usage, but cannot se
 
 Firmware is licensed under GPL v2 license.
 
+## Hardware
 
 ### Components to buy
 
