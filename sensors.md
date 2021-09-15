@@ -100,7 +100,7 @@ Testing of soldered LT1711 oscillator:
 
 According to test results, R_sense should be increased from 22 Ohm to 33 or 47.
 
-Working pretty well except one issue: when hand is touching uninsulated antenna, oscillator switches to very high frequency (3-10MHz instead of working 1MHz) - and does not return to normal oparation even if hand is removed.
+Working pretty well except one issue: when hand is touching uninsulated antenna, oscillator switches to very high frequency (5-10MHz instead of working 1MHz) - and does not return to normal oparation even if hand is removed.
 
 
 
@@ -109,6 +109,8 @@ Working pretty well except one issue: when hand is touching uninsulated antenna,
 Another comparator based current sensing oscillator.
 
 Trying to design schematic which allows to experiment with different additional components. The goal is to workaround touch issue found during LT1711 oscillator testing.
+
+LTSpice model ([download link](https://github.com/teensytheremin/theremin/raw/main/schematics/ltspice/2021_comparator_ltc6752_current_sensing_01.asc)):
 
 ![LTSpice model](/images/ltspice/current_sensing_oscillator_ltc6752_ltspice_model.png)
 
