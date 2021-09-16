@@ -60,6 +60,12 @@ Eric's oscillator LTSpice model:
 
 ![LTSpice model](/images/ltspice/differential_osc_2020-10-19.jpg)
 
+Recent BJT based differential amplifier current sensing oscillator is available in [this post](http://thereminworld.com/forums/T/30562?post=221201#221201)
+
+LTSpice model ([download link](https://github.com/teensytheremin/theremin/raw/main/schematics/ltspice/dewster_diff_osc_8xistor_2021-08-24.asc)):
+
+![LTSpice model](/images/ltspice/current_sensing_bjt_dewster_2021_08_24_ltspice_model.png)
+
 
 ### BJT differential amplifier current sensing
 
@@ -114,3 +120,4 @@ LTSpice model ([download link](https://github.com/teensytheremin/theremin/raw/ma
 
 ![LTSpice model](/images/ltspice/current_sensing_oscillator_ltc6752_ltspice_model.png)
 
+                                                                                                                                                    	
