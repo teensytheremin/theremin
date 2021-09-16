@@ -1,4 +1,8 @@
-## Sensors
+# Sensors
+
+---
+title: Sensors
+---
 
 In theremin sensor, we need to measure antenna capacitance with high precision, and fast enough.
 
