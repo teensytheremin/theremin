@@ -38,4 +38,5 @@
 # LTSpice
 *.log
 *.raw
+*.net
 	
