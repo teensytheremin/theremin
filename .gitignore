@@ -34,3 +34,8 @@
 
 # KiCAD
 .bak
+
+# LTSpice
+*.log
+*.raw
+	
