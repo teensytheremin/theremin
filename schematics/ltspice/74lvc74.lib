@@ -1,0 +1,137 @@
+* SN74LVC74APWR
+*****************************************************************************
+* (C) Copyright 2015 Texas Instruments Incorporated. All rights reserved.                                            
+*****************************************************************************
+** This model is designed as an aid for customers of Texas Instruments.
+** TI and its licensors and suppliers make no warranties, either expressed
+** or implied, with respect to this model, including the warranties of 
+** merchantability or fitness for a particular purpose.  The model is
+** provided solely on an "as is" basis.  The entire risk as to its quality
+** and performance is with the customer.
+*****************************************************************************
+*
+** Released by: WEBENCH(R) Design Center, Texas Instruments Inc.
+* Part: SN74LVC74APWR
+* Date: 06/25/2015
+* Model Type: Transient
+* Simulator: Pspice
+* Simulator Version: Pspice 16.2.0.s003
+* EVM Order Number: N/A 
+* EVM Users Guide: N/A
+* Datasheet: SCAS287T, 01 August 2013
+* Model Version: 1.00
+*
+*****************************************************************************
+*
+* Updates:
+* Version 1.0 : New model
+*
+************************************************************************* 
+*************************************************************************
+*$
+.SUBCKT 74LVC74 1CLRZ 1D 1CLK 1PREZ 1Q 1QZ GND VCC
+X_U1 1CLRZ 1D 1CLK 1PREZ 1Q 1QZ VCC GND SN74LVC74APWR_DFF
+.ENDS
+*$
+.SUBCKT SN74LVC74APWR_DFF CLRZ D CLK PREZ Q QZ VCC GND 
+C_D D GND 5e-12
+C_CLK CLK GND 5e-12
+C_PREZ PREZ GND 5e-12
+C_CLRZ CLRZ GND 5e-12
+R_RD   D GND 1.08e6 TC=0,0 
+R_RCLK CLK GND 1.08e6 TC=0,0 
+R_RPREZ PREZ GND 1.08e6 TC=0,0 
+R_RCLRZ CLRZ GND 1.08e6 TC=0,0 
+XCLK1 CLK CKZ VCC GND INV
+XCLK2 CKZ CK VCC GND INV
+XPRE PREZ PRE VCC GND INV
+X1 OUT OUTZ VCC GND INV
+X2 DOUT3 DOUT3Z VCC GND INV
+XTG1 CK CKZ D DOUT1 TG
+XTG2 CKZ CK DOUT1 DOUT2 TG
+XNAND1 DOUT1 CLRZ OUT  NAND
+XTG3 CKZ CK OUT DOUT3 TG
+XOR1 PRE OUTZ DOUT2  OR
+XOR2 PRE DOUT3Z QINT   OR
+XTG4 CK CKZ DOUT3 DOUT4 TG
+XNAND2 QINT CLRZ DOUT4  NAND
+XQOUT QINT_DL QI VCC GND INV1
+XQOUT1 QI Q VCC GND INV1
+XQZOUT DOUT4_DL QZ1 VCC GND INV1
+XQZOUT1 QZ1 QZ VCC GND INV1
+R_D1 QINT EINT1 3180
+D_D1 EINT1 QINT_DL DBREAK
+C_D1 QINT_DL GND 1p TC=0,0 
+R_D2 QINT_DL EINT2 2730
+D_D2 EINT2 QINT DBREAK
+.MODEL DBREAK D N=0.001 RS=0.001 T_ABS=27
+R_DQ1 DOUT4 EQINT1 3220
+D_DQ1 EQINT1 DOUT4_DL DBREAK
+C_DQ1 DOUT4_DL GND 1p TC=0,0 
+R_DQ2 DOUT4_DL EQINT2 2730
+D_DQ2 EQINT2 DOUT4 DBREAK
+
+.ENDS
+*$
+.SUBCKT TG C CZ IN Y 
+XT1 C GND IN Y SHI1
+XT2 CZ GND IN Y SLO1
+.ENDS
+*$
+.SUBCKT OR A B Y PARAMS: VDD=2.7 VSS=0 VTHRESH= 0.7
+E_ABMGATE Y_INT 0 VALUE = {IF(V(A) > {VTHRESH} | V(B)> {VTHRESH},{VDD},
++ IF(V(A) < {VTHRESH} | V(B)< {VTHRESH},{VSS},
++ IF(V(A) > {VTHRESH} & V(B)> {VTHRESH},{VDD}, {VSS})))}
+RINT Y_INT Y 1
+CINT Y 0 0.087NF
+.ENDS
+*$
+.SUBCKT TGATE C CZ IN Y 
+XT1 C GND IN Y SHI1
+XT2 CZ GND IN Y SLO1
+.ENDS
+*$
+.SUBCKT INV A Y VCC GND PARAMS: VDD=2.7 VSS=0 VTHRESH= 0.7
+E_ABMGATE YINT 0 VALUE = {IF(V(A) < {VTHRESH} ,{VDD},{VSS})}
+RINT YINT Y 1
+CINT Y 0 0.087NF
+.ENDS
+*$
+.SUBCKT INV1 A Y VCC GND PARAMS: VDD=2.7 VSS=0 VTHRESH= 0.7
+X1 A GND VCC Y SHI1
+X2 A GND GND Y SLO1
+.ENDS
+*$
+$
+.SUBCKT NAND A B Y PARAMS:VDD=2.7 VSS=0 VTHRESH= 0.7
+E_ABMGATE YINT 0 VALUE = {IF(V(A) > {VTHRESH} & V(B)> {VTHRESH},{VSS},
++ IF(V(A) < {VTHRESH} | V(B)< {VTHRESH},{VDD}, 
++ IF(V(A) < {VTHRESH} & V(B)< {VTHRESH},{VDD}, {VSS})))}
+RINT YINT Y 1
+CINT Y 0 0.087NF
+.ENDS
+*$
+.subckt SHI1 1 2 3 4  
+S_SHI1         3 4 1 2 _SHI1
+*RS_SHI1         1 2 1G
+.MODEL         _SHI1 VSWITCH Roff=4.25e6 Ron=33.33 Voff=1.7V Von=0.7V
+.ends SHI1
+*$
+.subckt SLO1 1 2 3 4  
+S_SLO1         3 4 1 2 _SLO1
+*RS_SLO1         1 2 1G
+.MODEL         _SLO1 VSWITCH Roff=4.25e6 Ron=33.33 Voff=0.7V Von=1.7V
+.ends SLO1
+*$
+.subckt SLO2 1 2 3 4  
+S_SLO2         3 4 1 2 _SLO2
+RS_SLO2         1 2 1G
+.MODEL         _SLO2 VSWITCH Roff=4.25e6 Ron=33.33 Voff=0.7V Von=1.7V
+.ends SLO2
+*$
+.subckt SHI2 1 2 3 4  
+S_SHI2         3 4 1 2 _SHI2
+RS_SHI2         1 2 1G
+.MODEL         _SHI2 VSWITCH Roff=4.25e6 Ron=33.33 Voff=1.7V Von=0.7V
+.ends SHI2
+*$
