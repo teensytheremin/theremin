@@ -1,0 +1,11 @@
+.subckt BBY65-02V k a
+b 0 f i=1m*Table(v(k,av),-1,36.5,0.,36.5,0.3,29.5,1,20.25,2,9.8,3,4.45,4.7,2.7)
+rc 0 f 1k
+cr 0 f 10p
+bc k av i=i(va)*(v(f)-1)
+C k avv 1p
+va avv av 0
+r av a 0.6
+d av k diod
+.model diod d isr=10n
+.ends
