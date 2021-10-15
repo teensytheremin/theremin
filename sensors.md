@@ -1,9 +1,5 @@
 # Sensors
 
----
-title: Sensors
----
-
 In theremin sensor, we need to measure antenna capacitance with high precision, and fast enough.
 
 Typical antenna capacitance is 8..10pF if there is no hand near antenna.
@@ -44,7 +40,7 @@ Usually, theremins use some of classic LC oscillator schematic: [Clapp](https://
 
 ## Current Sensing oscillators
 
-Idea of current sensing LC oscillator has been proposed by Eric Walling (aka dester) on thereminworld forum (see [topic](http://thereminworld.com/Forums/T/33275/armstrong-hartley-colpitts-clapp-wallin)).
+Idea of current sensing LC oscillator has been proposed by Eric Wallin (aka dewster) on thereminworld forum (see [topic](http://thereminworld.com/Forums/T/33275/armstrong-hartley-colpitts-clapp-wallin)).
 
 When LC tank is excitated with drive signal of frequency near LC resonance, drive current phase matches drive voltage. It's possible to measure current LC tank consumes from drive, and use it as drive signal.
 
