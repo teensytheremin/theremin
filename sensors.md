@@ -85,10 +85,15 @@ LTSpice model ([download link](https://github.com/teensytheremin/theremin/raw/ma
 Simple current sensing oscillator with minimum components.
 
 ![LTSpice model](/images/ltspice/current_sensing_oscillator_comparator_simple.png)
-
+                                                                                                                                                        	
 KiCAD schematics:
 
 ![Testing](images/schematic/current_sensing_oscillator_singleended_lt1711_pcb_kicad_schematic.png)
+
+[download PDF](pdfs/current_sensing_single_ended_oscillator.pdf)
+
+[download PDF rev 1.3](pdfs/current_sensing_single_ended_oscillator_compact.pdf)
+
 
 PCB Render:
 
