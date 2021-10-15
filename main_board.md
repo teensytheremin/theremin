@@ -12,7 +12,6 @@ Main board connects all parts together:
 
 ## Schematics
 
-![Schematic](/images/schematic/teensy4_theremin_main_board_kicad_schematic.png)
 
 * [schematic in PDF](pdfs/teensy41_main_board.pdf)
 
@@ -20,6 +19,12 @@ Main board connects all parts together:
 
 * [PCB Gerber files](https://github.com/teensytheremin/theremin/raw/main/schematics/kicad/teensy41_main_board/gerber/teensy41_main_board/teensy41_main_board.zip)
 
+
+![Schematic](/images/schematic/teensy4_theremin_main_board_kicad_schematic.png)
+
+![PCB Top render](images/schematic/teensy41_theremin_kicad_main_board_pcb_top_render.png)
+
+![PCB Bottom render](images/schematic/teensy41_theremin_kicad_main_board_pcb_bottom_render.png)
 
 ## Bill of materials
 
