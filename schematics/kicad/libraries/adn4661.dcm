@@ -1,0 +1,15 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP ADN4661
+D LVDS Single High Speed Differential Driver, 400Mbps, SOT-23-5
+K LVDS Driver
+F http://www.ti.com/lit/ds/symlink/ds90lv011a.pdf
+$ENDCMP
+#
+$CMP SN65LVDS1DBV
+D High-Speed Differential Line Driver, 630Mbps, SOT-23-5
+K LVDS Driver
+F http://www.ti.com/lit/ds/symlink/sn65lvds1.pdf
+$ENDCMP
+#
+#End Doc Library
