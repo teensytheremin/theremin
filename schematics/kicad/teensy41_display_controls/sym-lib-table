@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name teensy41_display_controls-rescue)(type Legacy)(uri ${KIPRJMOD}/teensy41_display_controls-rescue.lib)(options "")(descr ""))
+)
