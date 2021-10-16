@@ -125,4 +125,28 @@ LTSpice model ([download link](https://github.com/teensytheremin/theremin/raw/ma
 
 ![LTSpice model](/images/ltspice/current_sensing_oscillator_ltc6752_ltspice_model.png)
 
-                                                                                                                                                    	
+### Power rails current sensing oscillators
+                                          
+Unusual kind of current sensing is proposed in [this thread](http://thereminworld.com/forums/T/33275?post=221359#221359)
+
+![LTSpice model](https://teensytheremin.github.io/theremin/images/ltspice/current_sensing_oscillator_bjt_current_mirror_ltspice_model.png)
+
+![LTSpice model](https://teensytheremin.github.io/theremin/images/ltspice/current_sensing_oscillator_bjt_current_mirror_04_ltspice_model.png)
+
+                                                                                                          	
+### LT6200-10 opamp based current sensing oscillator
+
+Current sensing on fast opamp differential amplifier with limiter gives high voltage swing on antenna and small phase error.
+
+![LTSpice model](/images/ltspice/current_sensing_oscillator_lt6200_01_ltspice_model.png)
+
+Drive signal and LC tank current:
+
+![LTSpice model](/images/ltspice/current_sensing_oscillator_lt6200_01_drive_and_ind_current.png)
+
+Voltage swing on antenna:
+
+![LTSpice model](/images/ltspice/current_sensing_oscillator_lt6200_01_antenna_swing.png)
+
+TODO: design PCB for sensor board
+
