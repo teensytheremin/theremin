@@ -1,0 +1,9 @@
+** Experimental behavioral model for LVC1GU04
+** This model has not been fully tested and may not give accurate results.
+.SUBCKT LVC1GU04 A Y VDD VSS
+.MODEL myNfet NMOS (KP=17.5m VT0=0.9 LAMBDA=0.01)
+.MODEL myPfet PMOS (KP=19.375m VT0 =-0.65 LAMBDA=0.01)
+** Mxx DRAIN GATE SOURCE SUBSTRATE MODELNAME
+MP     Y     A    VDD    VDD       myNfet
+MN     Y     A    VSS    VSS       myPfet
+.ENDS
