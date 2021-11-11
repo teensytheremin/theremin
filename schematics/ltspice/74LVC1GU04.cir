@@ -1,0 +1,57 @@
+*-------------------------------------------------------------------------------
+*
+*
+* Unbuffered inverter
+* tpd 1n7,1n7,1n6n,1n3
+* tr 2n,2n5,2n5,2n5
+.SUBCKT 74LVC1GU04 A Y VCC VGND vcc1=3.3 speed1=1
+*
+XOUT A Y VCC VGND 74LVC_UNBUF vcc2={vcc1} speed2={speed1}
+*
+.ENDS 74LVC1GU04
+
+
+*-------------------------------------------------------------------------------*
+*
+* Unbuffered driver
+* There is only one driver strength used in the Picogate series, rated at ±32mA/5V
+.subckt 74lvc_unbuf IN OUT VCC VGND vcc3={vcc2} speed3={speed2}
+.model Desd D(Vfwd=0.65 Ron=10)
+.model strSW SW(Ron={Ron} Roff=1G Vt={0.48*VCC3} Vh=-100m Ilimit={Ilimit} level=2)
+.model wkSW SW(Ron={Ron*10} Roff=1G Vt=500m Vh=-210m Ilimit={Ilimit/10} level=2
+.model triSW SW(Ron=10 Roff=1G Vt=500m Vh=-10m)
+.param Ilimit 215m*(VCC3-1.1)/(5-1.1)
+.param Ron 7.5*(5/VCC3)**0.5
+.param Cval 0p5*Speed3
+*
+* I/P ESD structure
+D3 VGND IN Desd
+R2 IN INR 100
+D4 VGND INR Desd
+* No ESD diode to VCC because I/P is 5V tolerant at VCC<5V
+*
+* Input parasitics
+C4 INR VGND 3p
+C5 VCC INR 3p
+*
+* VCC to VCC buffer
+E1 DRV VGND INR 0 1
+*
+* Speed control
+R1 DRV DRVD 250
+C3 DRVD VGND {Cval}
+*
+* Output driver
+S1 VGND OUT DRVD VGND strSW
+S2 OUT VCC VCC DRVD strSW
+S3 VGND OUT DRVD VGND wkSW
+S4 OUT VCC VCC DRVD wkSW
+C1 VCC OUT 5p
+C2 OUT VGND 5p
+*
+* ESD structure
+D1 OUT VCC Desd
+D2 VGND OUT Desd
+*
+.ends 74lvc_unbuf
+

@@ -1,0 +1,191 @@
+************************************************ 
+*         NOMINAL N-CHANNEL TRANSISTOR         * 
+*            UCB-3 PARAMETER SET               * 
+*                  Nov-1995                    * 
+************************************************ 
+.MODEL MNEN NMOS 
++LEVEL = 3 
++KP    = 154E-6 
++VTO   = 0.57 
++TOX   = 15E-9 
++NSUB  = 7.8E16 
++GAMMA = 0.70 
++PHI   = 0.65 
++VMAX  = 187E3 
++RS    = 7.5 
++RD    = 7.5 
++XJ    = 0.26E-6 
++LD    = 0.11E-6 
++DELTA = 1.89 
++THETA = 0.072 
++ETA   = 0.043 
++KAPPA = 0.0 
++WD    = 0.0 
+ 
+*********************************************** 
+*        NOMINAL P-CHANNEL TRANSISTOR         * 
+*           UCB-3 PARAMETER SET               * 
+*                  Nov-1995                   * 
+*********************************************** 
+.MODEL MPEN PMOS 
++LEVEL = 3 
++KP    = 63.7E-6 
++VTO   = -0.67 
++TOX   = 15.0E-9 
++NSUB  = 6.0E16 
++GAMMA = 0.84 
++PHI   = 0.65 
++VMAX  = 1.0E6 
++RS    = 10 
++RD    = 10 
++XJ    = 0.30E-6 
++LD    = 0.04E-6 
++DELTA = 2.88 
++THETA = 0.189 
++ETA   = 0.091 
++KAPPA = 0.0 
++WD    = -0.03E-6 
+
+
+****************************************************** 
+*     START OF LVC CIRCUITS DESCRIPTION MODELS       * 
+*                     OCT. 1998                      * 
+****************************************************** 
+ 
+.SUBCKT INVERT2  2  4  1  90 
+* INVERTING BUFFER TYPE 
+* EQUIVALENT REFERENCE SIMULATION MODEL NOMINAL CASE 
+* USE THIS MODEL FOR 74LVCU04A
+* IN = 2,  OUT = 4,  VCC = 1,  GND = 90 
+* OCTOBER-1995 
+XIN1   20  30  50  60      LVCPROTN 
+XOUT   30  40  50  60      LVCOUT2N 
+XPK14 2 4 90 90 90 90 90 90 90 90 90 90 90 1 
++ 20 40 90 90 90 90 60 90 90 90 90 90 90 50 pk14 
+.ENDS 
+
+*********************************************** 
+*       START OF SUBCIRCUIT DESCRIPTION       * 
+*                  MAR. 1999                  * 
+*********************************************** 
+ 
+.SUBCKT LVCPROTN    2   3   50   60 
+* NOMINAL CASE PARAMETERS 
+* STANDARD LVC INPUT ESD STRUCTURE 
+* IN = 2,  OUT = 3,  VCC = 50,  GND = 60 
+* OCTOBER-1995 
+MN1 2 60 60 60 MNEN W=400U L=1.0U AD=7390P AS=208P PD=688U PS=420U 
+R1  3  2  100 
+MN2 3 60 60 60 MNEN W=43U L=1.0U AD=176P AS=208P PD=58U PS=58U 
+.ENDS 
+
+.SUBCKT LVCOUT2N    5   4   50   60 
+* NOMINAL CASE PARAMETERS 
+* OUTPUT MODULE 
+* IN1 = 5, OUT = 4,  VCC = 50,  GND = 60 
+* NOVEMBER 1995 
+* Increased output transistor sizes 
+R1  5 16 250 
+MP6 4 16 50 50 MPEN W=185U L=0.8U AD=370P AS=350P PD=125U PS=185U 
+R2 16  9 500 
+MP7 4  9 50 50 MPEN W=275U L=0.8U AD=450P AS=400P PD=175U PS=275U 
+R3  9 10 1K 
+MP8 4 10 50 50 MPEN W=350U L=0.8U AD=700P AS=500P PD=225U PS=350U 
+R4 10 11 1.5k 
+MP9 4 11 50 50 MPEN W=350U L=0.8U AD=700P AS=500P PD=225U PS=350U 
+R5  5 17 300 
+MN6 4 17 60 60 MNEN W= 125U L=0.8U AD=250P AS=200P PD=100U PS=125U 
+R6 17 12 750 
+MN7 4 12 60 60 MNEN W=125U L=0.8U AD=250P AS=200P PD=100U PS=125U 
+R7 12 13 1K 
+MN8 4 13 60 60 MNEN W=150U L=0.8U AD=300P AS=250P PD=125U PS= 150U 
+R8 13 14 1.5K 
+MN9 4 14 60 60 MNEN W= 150U L=0.8U AD= 300P AS= 250P PD=125U PS=150U 
+.ENDS 
+
+
+
+
+
+
+
+* TITLE TSSOP8
+* SPICE format. The pins chosen are shown by the inductor and resistor names.
+* L7 or R7 shows that pin 7 was chosen.  Internal subcircuit nodes are
+* ordered in an IN/OUT format.  1 is the board end of the first chosen pin, 
+* 2 is its die end. 3 is the board end of the 2nd chosen pin.  Etc.
+*
+.SUBCKT pk8 1 3 5 7  9 11 13 15
++           2 4 6 8 10 12 14 16
+R1  1 1001  6.28E-02
+R2  3 1003  4.72E-02
+R3  5 1005  4.65E-02
+R4  7 1007  6.15E-02
+R5  9 1009  6.22E-02
+R6 11 1011  4.69E-02
+R7 13 1013  4.67E-02
+R8 15 1015  6.18E-02
+
+L1 1001  2  1.584E-09
+L2 1003  4  1.312E-09
+L3 1005  6  1.251E-09
+L4 1007  8  1.472E-09
+L5 1009 10  1.484E-09
+L6 1011 12  1.256E-09
+L7 1013 14  1.304E-09
+L8 1015 16  1.527E-09
+.ENDS pk8
+
+* TITLE TSSOP14
+* SPICE format. The pins chosen are shown by the inductor and resistor names.
+* L7 or R7 shows that pin 7 was chosen.  Internal subcircuit nodes are
+* ordered in an IN/OUT format.  1 is the board end of the first chosen pin, 
+* 2 is its die end. 3 is the board end of the 2nd chosen pin.  Etc.
+*
+.SUBCKT pk14 1 3 5 7 9 11 13 15 17 19
++  21 23 25 27
++  2 4 6 8 10 12 14 16 18 20
++  22 24 26 28
+* pin resistors SI units, bondwire diameter, resistivity =  2.54E-05,  2.44E-08
+* leadframe thickness, resistivity =  1.50E-04,  2.87E-08
+R1 1 1001   3.46E-02
+R2 3 1003   4.33E-02
+R3 5 1005   2.80E-02
+R4 7 1007   2.88E-02
+R5 9 1009   2.80E-02
+R6 11 1011   4.33E-02
+R7 13 1013   3.46E-02
+R8 15 1015   3.46E-02
+R9 17 1017   4.33E-02
+R10 19 1019   2.80E-02
+R11 21 1021   2.88E-02
+R12 23 1023   2.80E-02
+R13 25 1025   4.33E-02
+R14 27 1027   3.46E-02
+
+* linear inductors leadframe thickness, resistivity =  1.50E-04,  2.87E-08
+L1 1001 2   2.32E-09
+L2 1003 4   2.04E-09
+L3 1005 6   1.36E-09
+L4 1007 8   1.38E-09
+L5 1009 10   1.36E-09
+L6 1011 12   2.04E-09
+L7 1013 14   2.32E-09
+L8 1015 16   2.32E-09
+L9 1017 18   2.04E-09
+L10 1019 20   1.36E-09
+L11 1021 22   1.38E-09
+L12 1023 24   1.36E-09
+L13 1025 26   2.04E-09
+L14 1027 28   2.31E-09
+* mutual inductors small ones pruned
+* If all the pins are in series, equivalent L =   2.56E-08  equivalent R =   4.81E-01
+* If all the pins are in parallel, equivalent L =   1.24E-10  equivalent R =   2.38E-03
+.ENDS pk14
+
+
+.SUBCKT 74LVCU04NXP  In Out Vcc Gnd
+
+XLVCU04A        In Out Vcc Gnd     INVERT2 
+
+.ENDS
