@@ -4,9 +4,9 @@ EESchema-LIBRARY Version 2.4
 # TeensyAudioD-MCU_Module
 #
 DEF TeensyAudioD-MCU_Module U 0 40 Y Y 1 F N
-F0 "U" 0 850 50 H V C CNN
-F1 "TeensyAudioD-MCU_Module" 0 700 50 H V C CNN
-F2 "Module:TeensyAudioD" 0 850 50 H I C CNN
+F0 "U" -50 900 50 H V C CNN
+F1 "TeensyAudioD-MCU_Module" -50 800 50 H V C CNN
+F2 "Module:TeensyAudioD" 0 1000 50 H I C CNN
 F3 "" 0 850 50 H I C CNN
 DRAW
 S -400 750 400 -950 0 1 0 f

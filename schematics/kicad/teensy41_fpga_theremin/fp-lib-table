@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name tang_nano_fpga)(type KiCad)(uri ${KIPRJMOD}/../libraries/tang_nano_fpga.pretty)(options "")(descr ""))
+  (lib (name theremin)(type KiCad)(uri ${KIPRJMOD}/../libraries)(options "")(descr ""))
+)

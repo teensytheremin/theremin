@@ -1,0 +1,7 @@
+(sym_lib_table
+  (lib (name teensyaudiod-mcu_module)(type Legacy)(uri ${KIPRJMOD}/../libraries/teensyaudiod-mcu_module.lib)(options "")(descr ""))
+  (lib (name teensy41-mcu_module)(type Legacy)(uri ${KIPRJMOD}/../libraries/teensy41-mcu_module.lib)(options "")(descr ""))
+  (lib (name plt133t10w)(type Legacy)(uri ${KIPRJMOD}/../libraries/plt133t10w.lib)(options "")(descr ""))
+  (lib (name tang_nano_fpga)(type Legacy)(uri ${KIPRJMOD}/../libraries/tang_nano_fpga.lib)(options "")(descr ""))
+  (lib (name plr135t10)(type Legacy)(uri ${KIPRJMOD}/../libraries/plr135t10.lib)(options "")(descr ""))
+)
