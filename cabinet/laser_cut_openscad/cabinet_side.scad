@@ -1,8 +1,7 @@
 include <rounded_rectangle.scad>
 
-module cabinet_side_common(cabinet_length=400, cabinet_width=63, cabinet_height=40, sheet_thickness=5, edge_extra=5, edge_rounding=3, ray_correction=0.1) {
-    spike_width = sheet_thickness * 3; // + ray_correction*2;
-    spike_height = sheet_thickness + edge_extra;
+module cabinet_side_common(cabinet_length=400, cabinet_width=63, cabinet_height=40, sheet_thickness=5, edge_extra=5, edge_rounding=3, ray_correction=0.1, spike_width = 20, spike_height = 9) {
+
     w = cabinet_width + sheet_thickness*2 + edge_extra*2;
     wtop = w  + edge_extra*6;
     mic_stand_mount_height = 18.288; // 0.72
@@ -35,13 +34,13 @@ module cabinet_side_common(cabinet_length=400, cabinet_width=63, cabinet_height=
 
 }
 
-module cabinet_side_left_flat(cabinet_length=400, cabinet_width=63, cabinet_height=40, sheet_thickness=5, edge_extra=5, edge_rounding=3, ray_correction=0.1) {
+module cabinet_side_left_flat(cabinet_length=400, cabinet_width=63, cabinet_height=40, sheet_thickness=5, edge_extra=5, edge_rounding=3, ray_correction=0.1, spike_width = 20, spike_height = 9) {
     difference() {
         antenna_d = 10; // 1/2 inch water pipe thread diameter
         antenna_mount_d = 22; // 1/2 inch water pipe thread diameter
         volume_ant_mnt_dist = 60;
         volume_ant_angle = 10;
-        cabinet_side_common(cabinet_length=cabinet_length, cabinet_width=cabinet_width, cabinet_height=cabinet_height, sheet_thickness=sheet_thickness, edge_extra=edge_extra, edge_rounding=edge_rounding, ray_correction=ray_correction);
+        cabinet_side_common(cabinet_length=cabinet_length, cabinet_width=cabinet_width, cabinet_height=cabinet_height, sheet_thickness=sheet_thickness, edge_extra=edge_extra, edge_rounding=edge_rounding, ray_correction=ray_correction, spike_width=spike_width, spike_height=spike_height);
         translate([-cabinet_width/5, 0, 0]) {
             circle(d = antenna_mount_d);
             rotate([0, 0, -volume_ant_angle]) translate([volume_ant_mnt_dist, 0, 0]) circle(d = antenna_d);
@@ -49,26 +48,26 @@ module cabinet_side_left_flat(cabinet_length=400, cabinet_width=63, cabinet_heig
     }
 }
 
-module cabinet_side_right_flat(cabinet_length=400, cabinet_width=63, cabinet_height=40, sheet_thickness=5, edge_extra=5, edge_rounding=3, ray_correction=0.1) {
+module cabinet_side_right_flat(cabinet_length=400, cabinet_width=63, cabinet_height=40, sheet_thickness=5, edge_extra=5, edge_rounding=3, ray_correction=0.1, spike_width = 20, spike_height = 9) {
     difference() {
         antenna_d = 10; // 1/2 inch water pipe thread diameter
         antenna_mount_d = 22; // 1/2 inch water pipe thread diameter
         volume_ant_mnt_dist = 60;
-        cabinet_side_common(cabinet_length=cabinet_length, cabinet_width=cabinet_width, cabinet_height=cabinet_height, sheet_thickness=sheet_thickness, edge_extra=edge_extra, edge_rounding=edge_rounding, ray_correction=ray_correction);
+        cabinet_side_common(cabinet_length=cabinet_length, cabinet_width=cabinet_width, cabinet_height=cabinet_height, sheet_thickness=sheet_thickness, edge_extra=edge_extra, edge_rounding=edge_rounding, ray_correction=ray_correction, spike_width=spike_width, spike_height=spike_height);
         translate([cabinet_width/5, 0, 0]) {
             circle(d = antenna_mount_d);
         }
     }
 }
 
-module cabinet_side_left(cabinet_length=400, cabinet_width=63, cabinet_height=40, sheet_thickness=5, edge_extra=5, edge_rounding=4, ray_correction=0.1) {
+module cabinet_side_left(cabinet_length=400, cabinet_width=63, cabinet_height=40, sheet_thickness=5, edge_extra=5, edge_rounding=4, ray_correction=0.1, spike_width = 20, spike_height = 9) {
     translate([0,0,-sheet_thickness/2]) linear_extrude(sheet_thickness)
-        cabinet_side_left_flat(cabinet_length=cabinet_length, cabinet_width=cabinet_width, cabinet_height=cabinet_height, sheet_thickness=sheet_thickness, edge_extra=edge_extra, edge_rounding=edge_rounding, ray_correction=ray_correction);
+        cabinet_side_left_flat(cabinet_length=cabinet_length, cabinet_width=cabinet_width, cabinet_height=cabinet_height, sheet_thickness=sheet_thickness, edge_extra=edge_extra, edge_rounding=edge_rounding, ray_correction=ray_correction, spike_width=spike_width, spike_height=spike_height);
 }
 
-module cabinet_side_right(cabinet_length=400, cabinet_width=63, cabinet_height=40, sheet_thickness=5, edge_extra=5, edge_rounding=4, ray_correction=0.1) {
+module cabinet_side_right(cabinet_length=400, cabinet_width=63, cabinet_height=40, sheet_thickness=5, edge_extra=5, edge_rounding=4, ray_correction=0.1, spike_width = 20, spike_height = 9) {
     translate([0,0,-sheet_thickness/2]) linear_extrude(sheet_thickness)
-        cabinet_side_right_flat(cabinet_length=cabinet_length, cabinet_width=cabinet_width, cabinet_height=cabinet_height, sheet_thickness=sheet_thickness, edge_extra=edge_extra, edge_rounding=edge_rounding, ray_correction=ray_correction);
+        cabinet_side_right_flat(cabinet_length=cabinet_length, cabinet_width=cabinet_width, cabinet_height=cabinet_height, sheet_thickness=sheet_thickness, edge_extra=edge_extra, edge_rounding=edge_rounding, ray_correction=ray_correction, spike_width=spike_width, spike_height=spike_height);
 }
 
 //cabinet_side_left();
