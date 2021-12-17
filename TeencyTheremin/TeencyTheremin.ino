@@ -8,6 +8,50 @@
 #include <AudioStream.h>
 #include "AudioControl.h"
 
+IntervalTimer pitchInputTimer;
+IntervalTimer volumeInputTimer;
+
+const int ledPin = 13;  // the pin with a LED
+bool ledOn = false;
+volatile unsigned long pitchSensorValue = 55000; //mHz
+volatile unsigned long volumeSensorValue = 1000000; //ppm
+
+int regime = 1;
+void simulatePitchInput() {
+  if(regime == 1) {
+    pitchSensorValue = (long) pitchSensorValue * 1.005;
+  }
+  if(regime == 2) { 
+    pitchSensorValue = (long) pitchSensorValue * 0.995;
+  }
+  
+  if(pitchSensorValue > 16000000){
+    regime = 2;
+  }
+  if(pitchSensorValue < 55000){
+    pitchSensorValue = 440000;
+    volumeSensorValue = 10000;
+    regime = 3;
+  }
+}
+void simulateVolumeInput() {
+  if(regime == 3) {
+    volumeSensorValue = volumeSensorValue + 500;
+  }
+  if(regime == 4) { 
+    volumeSensorValue = volumeSensorValue - 500;
+  }
+  
+  if(volumeSensorValue > 1000000){
+    regime = 4;
+  }
+  if(volumeSensorValue < 10000){
+    pitchSensorValue = 55000;
+    volumeSensorValue = 1000000;
+    regime = 1;
+  }
+}
+
 unsigned char *sp = william;
 
 #define AMPLITUDE (0.2)
@@ -119,10 +163,14 @@ AudioConnection patchCord42(mixerRight, 0, audioOut, 1);
 ThereminAudioControlSGTL5000 codec;
 
 // Initial value of the volume control
-int volume = 50;
+//int volume = 50;
 
 void setup()
 {
+  pinMode(ledPin, OUTPUT);
+  pitchInputTimer.begin(simulatePitchInput, 5000);  // pitch changes every 0.005 seconds
+  volumeInputTimer.begin(simulateVolumeInput, 10000);  // volume changes every 0.01 seconds
+  
   Serial.begin(115200);
   //while (!Serial) ; // wait for Arduino Serial Monitor
   delay(200);
@@ -138,7 +186,7 @@ void setup()
   AudioMemory(18);
   
   codec.enable();
-  codec.volume(0.45);
+  codec.volume(0.50);
 
   // reduce the gain on some channels, so half of the channels
   // are "positioned" to the left, half to the right, but all
@@ -169,16 +217,25 @@ void setup()
   AudioMemoryUsageMaxReset();
 }
 
+float volume;
 
 unsigned long last_time = millis();
 void loop()
 {
   unsigned char c,opcode,chan;
   unsigned long d_time;
-  
+
+  unsigned long pitchSensorValueCopy;  
+  unsigned long volumeSensorValueCopy;
+
+  noInterrupts();
+  pitchSensorValueCopy = pitchSensorValue;
+  volumeSensorValueCopy = volumeSensorValue;
+  interrupts();
+ 
 // Change this to if(1) for measurement output every 5 seconds
 if(1) {
-  if(millis() - last_time >= 5000) {
+  if(millis() - last_time >= 1000) {
     Serial.print("Proc = ");
     Serial.print(AudioProcessorUsage());
     Serial.print(" (");    
@@ -188,19 +245,32 @@ if(1) {
     Serial.print(" (");    
     Serial.print(AudioMemoryUsageMax());
     Serial.println(")");
+
+    if (ledOn == false) {
+      ledOn = true;
+    } 
+    else {
+      ledOn = false;
+    }
+    digitalWrite(ledPin, ledOn);
+    Serial.print("regime = ");
+    Serial.println(regime);
+    Serial.print("pitchSensorValue = ");
+    Serial.println(pitchSensorValueCopy);
+    Serial.print("volumeSensorValue = ");
+    Serial.println(volumeSensorValueCopy);
+    Serial.print("volume = ");
+    Serial.println(volume);
+  
     last_time = millis();
   }
 }
 
-  // Volume control
-  //  uncomment if you have a volume pot soldered to your audio shield
-  /*
-  int n = analogRead(15);
-  if (n != volume) {
-    volume = n;
-    codec.volume((float)n / 1023);
+  float v = volumeSensorValueCopy / 1000000.0 / 2.0;
+  if (v != volume) {
+    codec.volume(v);
   }
-  */
+  volume = v;
   
   // read the next note from the table
   c = *sp++;
