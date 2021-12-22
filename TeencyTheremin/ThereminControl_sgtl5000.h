@@ -1,7 +1,3 @@
-/* Teency Theremin 
- * 2021.12.15 Main class renamed (Andrey Rogatkin)
- */ 
-
 /* Audio Library for Teensy 3.X
  * Copyright (c) 2014, Paul Stoffregen, paul@pjrc.com
  *

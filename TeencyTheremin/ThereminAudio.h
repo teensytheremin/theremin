@@ -1,7 +1,3 @@
-/* Teency Theremin 
- * 2021.12.13 Unnecessary headers removed. (Andrey Rogatkin)
- */ 
-
 /* Audio Library for Teensy 3.X
  * Copyright (c) 2014, Paul Stoffregen, paul@pjrc.com
  *
@@ -84,9 +80,7 @@
 #include "effect_chorus.h"
 #include "effect_fade.h"
 #include "effect_flange.h"
-*/
 #include "effect_envelope.h"
-/*
 #include "effect_multiply.h"
 #include "effect_delay.h"
 #include "effect_delay_ext.h"
@@ -114,9 +108,7 @@
 #include "input_pdm.h"
 #include "input_pdm_i2s2.h"
 #include "input_spdif3.h"
-*/
 #include "mixer.h"
-/*
 #include "output_dac.h"
 #include "output_dacs.h"
 */
@@ -143,10 +135,10 @@
 #include "play_serialflash_raw.h"
 #include "record_queue.h"
 #include "synth_tonesweep.h"
-#include "synth_sine.h"
 */
-#include "synth_waveform.h"
+#include "synth_sine.h"
 /*
+#include "synth_waveform.h"
 #include "synth_dc.h"
 #include "synth_whitenoise.h"
 #include "synth_pinknoise.h"
