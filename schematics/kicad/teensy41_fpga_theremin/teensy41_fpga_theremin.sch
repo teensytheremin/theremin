@@ -3012,6 +3012,11 @@ Wire Wire Line
 	5800 7950 5200 7950
 Wire Wire Line
 	5750 8350 3750 8350
+Connection ~ 3750 8350
+Wire Wire Line
+	3750 8350 3750 8850
+Text Label 5200 8350 0    50   ~ 0
+P_FPGA_3V3
 Wire Bus Line
 	2700 1100 2700 2200
 Wire Bus Line
@@ -3030,9 +3035,4 @@ Wire Bus Line
 	8650 6600 8650 8850
 Wire Bus Line
 	8650 1250 8650 3500
-Connection ~ 3750 8350
-Wire Wire Line
-	3750 8350 3750 8850
-Text Label 5200 8350 0    50   ~ 0
-P_FPGA_3V3
 $EndSCHEMATC
