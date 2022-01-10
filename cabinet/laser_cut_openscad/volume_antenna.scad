@@ -31,7 +31,7 @@ module round_tube_s(diameter=10, rounding=100, dx=90) {
     translate([-dx/2,dy2,0]) rotate([180,0,180+a]) round_tube(angle=a, diameter=diameter, rounding=rounding);
 }
 
-module volume_antenna(length=500, diameter=10, big_rounding=60, mount_delta=60) {
+module volume_antenna(length=500, diameter=10, big_rounding=75, mount_delta=87, end_length_diff = 20) {
     // L = 2*PI*r
     big_round_length=big_rounding*PI;
     
@@ -44,8 +44,6 @@ module volume_antenna(length=500, diameter=10, big_rounding=60, mount_delta=60) 
     
     //small_round_length=small_rounding*PI;
     straight_length=length - big_round_length - small_round_length;
-    
-    end_length_diff = 20; // ending straight segment is longer
     
     start_length_mandatory = small_dy;
     end_length_mandatory = end_length_diff;
@@ -75,12 +73,12 @@ module volume_antenna(length=500, diameter=10, big_rounding=60, mount_delta=60) 
     }
 }
 
-module volume_antenna_assembled(length=500, diameter=10, big_rounding=70, mount_delta=60, sheet_thickness=5,big_thread_d=20.7, big_thread_wall=2, big_thread_len=14, hex_len=12, small_thread_d=16.5, pipe1_len=20) {
+module volume_antenna_assembled(length=500, diameter=10, big_rounding=75, mount_delta=87, end_length_diff = 20, sheet_thickness=5,big_thread_d=20.7, big_thread_wall=2, big_thread_len=14, hex_len=12, small_thread_d=16.5, pipe1_len=20) {
     translate([-sheet_thickness,0,0]) {
         // fitting
         translate([big_thread_len,0,0]) rotate([180,90,0]) KSM1002_fitting(big_thread_d=big_thread_d, big_thread_wall=big_thread_wall, big_thread_len=big_thread_len, hex_len=hex_len, small_thread_d=small_thread_d, pipe1_len=pipe1_len);
         // antenna
-        translate([-15,0,0]) volume_antenna(length=length, diameter=diameter, big_rounding=big_rounding, mount_delta=mount_delta);
+        translate([-15,0,0]) volume_antenna(length=length, diameter=diameter, big_rounding=big_rounding, mount_delta=mount_delta, end_length_diff=end_length_diff);
         // fitting mount
         translate([sheet_thickness,0,0]) rotate([0,-90,0]) fitting_mount_hex();
     }
@@ -91,5 +89,5 @@ module volume_antenna_assembled(length=500, diameter=10, big_rounding=70, mount_
 //round_tube();
 //tube();
 //round_tube_s();
-//volume_antenna();
+//volume_antenna(end_length_diff=10);
   

@@ -13,13 +13,21 @@ panel_extra_space=0.3;
 front_panel_offset_y = -2;
 rear_panel_offset_y = -2;
 
+mic_stand_mount_height = 18.288; // 0.72
+
 cabinet_width=pcb_width + panel_thickness*2 + panel_extra_space*2;
 
 sheet_thickness=4;
+
 edge_extra=5;
 edge_rounding=3;
 
-ray_correction=-0.2;
+ray_correction=-0.1;
+
+
+// destance between volume antenna ends
+volume_antenna_mount_delta=87;
+
 
 // laser cut parts mounting spikes dimensions
 spike_width = 16;
@@ -32,10 +40,11 @@ pcb_mount_offset = panel_thickness + panel_extra_space;
 pcb_mount_width = spike_width + 10;
 
 
-holder_angle=60;
+holder_angle=30;
+holder_front_extra=50;
 
 
-inductor_mount_wall_dist = 0.5;
+inductor_mount_wall_dist = 1;
 
 inductor_frame_d = 32;
 inductor_frame_internal_d = 20;

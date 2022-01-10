@@ -89,7 +89,6 @@ module inductor_mount(cabinet_height=44, sheet_thickness=5, ray_correction=0.1, 
     rotate([90,0,0]) translate([0,0,-sheet_thickness/2]) linear_extrude(sheet_thickness) inductor_mount_flat(cabinet_height=cabinet_height, sheet_thickness=sheet_thickness, ray_correction=ray_correction, spike_width = spike_width, spike_height = spike_height, edge_rounding=edge_rounding, frame_d=frame_d, spring_thickness=spring_thickness, spring_angle=spring_angle);
 }
 
-//inductor_mount_side_flat();
 //inductor_mount_side();
 //inductor_mount();
 
