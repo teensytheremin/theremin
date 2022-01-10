@@ -31,7 +31,7 @@ module spring_holder(inner_d=32, outer_d=35, cabinet_height=44, angle=12) {
     dy = middle_d/2 - cos(angle)*middle_d/2;
     straight_len = cabinet_height/2-dx;
     
-    ring_segment(inner_d=inner_d, outer_d=outer_d, angle1=angle, angle2=-angle);
+    ring_segment(inner_d=inner_d, outer_d=outer_d, angle1=angle+1, angle2=-angle-1);
     translate([middle_d-dy*2.0, dx*2,0]) ring_segment(inner_d=inner_d, outer_d=outer_d, angle1=-angle, angle2=angle);
     translate([middle_d-dy*2.0, -dx*2,0]) ring_segment(inner_d=inner_d, outer_d=outer_d, angle1=-angle, angle2=0);
     
@@ -90,7 +90,7 @@ module inductor_mount(cabinet_height=44, sheet_thickness=5, ray_correction=0.1, 
 }
 
 //inductor_mount_side();
-//inductor_mount();
+//inductor_mount_flat();
 
 
 //spring_holder();

@@ -516,13 +516,19 @@ module rear_panel_angle(panel_width=120, panel_height=30) {
     rear_panel_bottom(panel_width=panel_width);
 }
 
-module rear_panel(panel_width=120, panel_height=44, panel_thickness=1, pcb_dy=-11, pcb_thickness=1.6) {
-    rotate([90,0,0])
-    linear_extrude(panel_thickness)
+module rear_panel_flat(panel_width=120, panel_height=44, panel_thickness=1, pcb_dy=-11, pcb_thickness=1.6) {
+
     difference() {
         square([panel_width, panel_height], center=true);
         translate([0,pcb_dy+pcb_thickness,0])rear_panel_holes();
     }
+}
+
+
+module rear_panel(panel_width=120, panel_height=44, panel_thickness=1, pcb_dy=-11, pcb_thickness=1.6) {
+    rotate([90,0,0])
+    linear_extrude(panel_thickness)
+    rear_panel_flat(panel_width=panel_width, panel_height=panel_height, panel_thickness=panel_thickness, pcb_dy=pcb_dy, pcb_thickness=pcb_thickness);
 }
 
 //rear_panel();
@@ -592,13 +598,17 @@ module front_panel_angle(panel_width=120, panel_height=30) {
     front_panel_bottom(panel_width=panel_width);
 }
 
-module front_panel(panel_width=120, panel_height=44, panel_thickness=1, pcb_dy=-11, pcb_thickness=1.6) {
-    rotate([90,0,0])
-    linear_extrude(panel_thickness)
+module front_panel_flat(panel_width=120, panel_height=44, panel_thickness=1, pcb_dy=-11, pcb_thickness=1.6) {
     difference() {
         square([panel_width, panel_height], center=true);
         translate([0,pcb_dy+pcb_thickness,0]) front_panel_holes();
     }
+}
+
+module front_panel(panel_width=120, panel_height=44, panel_thickness=1, pcb_dy=-11, pcb_thickness=1.6) {
+    rotate([90,0,0])
+    linear_extrude(panel_thickness)
+    front_panel_flat(panel_width=panel_width, panel_height=panel_height, panel_thickness=panel_thickness, pcb_dy=pcb_dy, pcb_thickness=pcb_thickness);
 }
 
 //front_panel();

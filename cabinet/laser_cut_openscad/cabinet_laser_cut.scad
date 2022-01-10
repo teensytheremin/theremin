@@ -1,12 +1,13 @@
-include <cabinet_bottom.scad>
-include <cabinet_top.scad>
-include <cabinet_side.scad>
-include <cabinet_front.scad>
-include <cabinet_tablet_mount.scad>
-include <pitch_antenna.scad>
-include <volume_antenna.scad>
-include <mic_stand_mount.scad>
-include <inductor_ppl_frame.scad>
+use  <cabinet_bottom.scad>
+use <cabinet_top.scad>
+use <cabinet_side.scad>
+use <cabinet_front.scad>
+use <cabinet_tablet_mount.scad>
+use <pitch_antenna.scad>
+use <volume_antenna.scad>
+use <mic_stand_mount.scad>
+use <inductor_ppl_frame.scad>
+//use <theremin_pcb.scad>
 include <cabinet_params.scad>
 
 module laser_cut_inductor_mounts(spacing=7) {
@@ -41,7 +42,7 @@ module laser_cut_cabinet_main(spacing=7) {
     translate([0,0,0]) cabinet_bottom_flat(cabinet_length=cabinet_length, cabinet_width=cabinet_width, cabinet_height=cabinet_height, sheet_thickness=sheet_thickness, edge_extra=edge_extra, edge_rounding=edge_rounding, ray_correction=ray_correction, spike_width=spike_width, spike_height=spike_height,  volume_inductor_offset=volume_inductor_offset, inductor_mount_wall_dist = inductor_mount_wall_dist, pitch_inductor_offset = pitch_inductor_offset,
 pitch_inductor_length = pitch_inductor_length, pitch_inductor_side_offset=pitch_inductor_side_offset, pcb_length=pcb_length);
     
-    // top
+    // top  
     translate([0,full_width+spacing,0]) cabinet_top_flat(cabinet_length=cabinet_length, cabinet_width=cabinet_width, cabinet_height=cabinet_height, sheet_thickness=sheet_thickness, edge_extra=edge_extra, edge_rounding=edge_rounding, ray_correction=ray_correction, spike_width=spike_width, spike_height=spike_height); 
 
     side_y = -full_width/2-spacing-full_height/2;
@@ -76,8 +77,8 @@ module laser_cut_layout() {
 }
 
 
-
 //projection() translate([0,0,-1]) linear_extrude(2) 
 laser_cut_layout();
+
 //laser_cut_cabinet_main();
 //laser_cut_inductor_mounts();

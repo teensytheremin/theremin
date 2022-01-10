@@ -1,14 +1,14 @@
-include <cabinet_bottom.scad>
-include <cabinet_top.scad>
-include <cabinet_side.scad>
-include <cabinet_front.scad>
-include <cabinet_tablet_mount.scad>
-include <pitch_antenna.scad>
-include <volume_antenna.scad>
-include <mic_stand_mount.scad>
+use <cabinet_bottom.scad>
+use <cabinet_top.scad>
+use <cabinet_side.scad>
+use <cabinet_front.scad>
+use <cabinet_tablet_mount.scad>
+use <pitch_antenna.scad>
+use <volume_antenna.scad>
+use <mic_stand_mount.scad>
+use <inductor_ppl_frame.scad>
+use <theremin_pcb.scad>
 include <cabinet_params.scad>
-include <inductor_ppl_frame.scad>
-include <theremin_pcb.scad>
 
 module tablet_landscape(w=204,h=137.4,t=14.2) {
     translate([0,h/2,0]) linear_extrude(t)

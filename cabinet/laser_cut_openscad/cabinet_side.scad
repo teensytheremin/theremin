@@ -39,8 +39,8 @@ module cabinet_side_common(cabinet_length=400, cabinet_width=63, cabinet_height=
     translate([-wtop/2+legs_width/2, -cabinet_height/2 - legs_height, 0]) rounded_spike_down(width=legs_width, height=legs_height/2, radius=edge_rounding);
     translate([wtop/2-legs_width/2+front_extra, -cabinet_height/2 - legs_height, 0]) rounded_spike_down(width=legs_width, height=legs_height/2, radius=edge_rounding);
     // top spikes
-    translate([-cabinet_width/2+spike_width/2, cabinet_height/2 + spike_height/2, 0]) rounded_spike_up(width=spike_width, height=spike_height, radius=edge_rounding);
-    translate([cabinet_width/2-spike_width/2, cabinet_height/2 + spike_height/2, 0]) rounded_spike_up(width=spike_width, height=spike_height, radius=edge_rounding);
+    translate([-cabinet_width/2+spike_width/2, cabinet_height/2 + spike_height/2-0.1, 0]) rounded_spike_up(width=spike_width, height=spike_height+0.2, radius=edge_rounding);
+    translate([cabinet_width/2-spike_width/2, cabinet_height/2 + spike_height/2-0.1, 0]) rounded_spike_up(width=spike_width, height=spike_height+0.2, radius=edge_rounding);
 
 }
 
@@ -83,7 +83,7 @@ module cabinet_side_right(cabinet_length=400, cabinet_width=63, cabinet_height=4
         rotate([0,180,0]) cabinet_side_right_flat(cabinet_length=cabinet_length, cabinet_width=cabinet_width, cabinet_height=cabinet_height, front_extra=front_extra, sheet_thickness=sheet_thickness, edge_extra=edge_extra, edge_rounding=edge_rounding, ray_correction=ray_correction, spike_width=spike_width, spike_height=spike_height, mic_stand_mount_height = mic_stand_mount_height);
 }
 
-//cabinet_side_left(front_extra=30);
+//cabinet_side_left_flat(front_extra=30);
 //translate([0,-90,0]) cabinet_side_right(front_extra=30);
 
 //translate([0,100,0]) cabinet_side_right();
