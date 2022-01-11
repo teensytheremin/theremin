@@ -1,6 +1,6 @@
 # Teensy Digital Theremin
 
-This is aimed to design of simple but good DIY digital [theremin](https://en.wikipedia.org/wiki/Theremin) based on microcontroller and FPGAs.
+This project is aimed to design of simple but good DIY digital [theremin](https://en.wikipedia.org/wiki/Theremin) based on microcontroller and FPGAs.
 
 Teensy 4.1 and Teensy Audio Adaptor boards are responsible for audio synthesis.
 Android tablet is used for as controlling UI.
