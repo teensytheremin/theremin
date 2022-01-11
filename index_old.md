@@ -1,13 +1,6 @@
 # Teensy Digital Theremin
 
-This is aimed to design of simple but good DIY digital [theremin](https://en.wikipedia.org/wiki/Theremin) based on microcontroller and FPGAs.
-
-Teensy 4.1 and Teensy Audio Adaptor boards are responsible for audio synthesis.
-Android tablet is used for as controlling UI.
-Two small and cheap FPGA boards implement digital part of theremin sensors.
-Reference design uses laser cut acrylic or plywood cabinet and 10mm water pipes and fittings as antennas (close to Moog Etherwave form factor).
-
-![Cabinet render](https://teensytheremin.github.io/theremin/images/cabinet/openscad/cabinet_assembled_v2.png)
+This is an attempt to design good DIY digital [theremin](https://en.wikipedia.org/wiki/Theremin) based on microcontroller.
 
 This project is currently in progress.
 
@@ -71,16 +64,15 @@ Supports 16bit 48KHz stereo, with Line In, Line Out, and Phones Out.
 Buy revision D (designed for using with Teensy 4.x)
 
 
-#### 2 x Lichee Tang Nano FPGA Boards
+#### Color Touch LCD 2.8 inch
 
-Two small FPGA boards are used for implementing of digital part of sensors.
-One FPGA for Volume sensor, one for Pitch sensor.
+Color 320x240 TFT resistive touchscreen [$16 on PJRC.COM](https://www.pjrc.com/store/display_ili9341_touch.html)
 
-[Sipeed Lichee Tang Nano](https://tangnano.sipeed.com/en/) is available on [aliexpress.com](aliexpress.com) for about $6
+![Teensy 4.1 image](images/boards/display_ili9341_touch.jpg)
 
-![Tang Nano image](https://tangnano.sipeed.com/assets/tang_nano_pinout_v1.0.0_w5676_h4000_large.png)
+TFT board has ILI9341 display controller and XPT2046 resistive touch controller - both accessed via SPI.
 
-FPGAs implement digital phase locked loop (DPLL), with main hum noise filtering, and provides its output to MCU via I2S data stream.
+Current version display and controls board is designed for using with 2.8 inch screen. There is larger, 3.2 inch display with the same pinout - probably, we will redesign display board for bigger screen.
 
                                                            
 ### Sensor
