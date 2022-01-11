@@ -142,8 +142,8 @@ cabinet_assembled();
 pcb_mounts();
 inductors();
 theremin_pcbs();
-color("white") panels();
+color("white") # panels();
 stand_mount();
 
-antennas();
-tablet_standing();
+//antennas();
+//tablet_standing();

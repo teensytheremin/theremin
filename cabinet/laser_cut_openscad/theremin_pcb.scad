@@ -294,6 +294,31 @@ module plt133t10w() {
     color("gold") translate([2.54,2.35+8.76,-3.85]) cylinder(h=3.85, d=0.4);
     color("gold") translate([0,2.35+8.76,-3.85]) cylinder(h=3.85, d=0.4);
 }
+
+module tactButton() {
+    // front metal panel
+    color("silver") translate([-7.5/2, 0, 1]) cube([7.5, 0.5, 6.1]);
+    // side panels
+    color("silver") translate([-7.5/2, 0.5, 2]) cube([0.5, 3.3, 3]);
+    color("silver") translate([7.5/2-0.5, 0.5, 2]) cube([0.5, 3.3, 3]);
+    color("silver") translate([-7.5/2, 2.5, 0]) cube([0.5, 3.5, 4]);
+    color("silver") translate([7.5/2-0.5, 2.5, 0]) cube([0.5, 3.5, 4]);
+    // mounting pins
+    color("silver") translate([-7.5/2, 4.5, -3.9]) cube([0.5, 1, 3.9]);
+    color("silver") translate([7.5/2-0.5, 4.5, -3.9]) cube([0.5, 1, 3.9]);
+    // signal pins
+    color("gold") translate([-4.5/2, 2.6, -3.9]) cube([0.3, 0.3, 4.9]);
+    color("gold") translate([4.5/2-0.3, 2.6, -3.9]) cube([0.3, 0.3, 4.9]);
+    // plastic body
+    color("#404040") translate([-7.5/2, 0.5, 5]) cube([7.5, 2.8, 2.1]);
+    color("#404040") translate([-6.5/2, 0.5, 1]) cube([6.5, 2.8, 4]);
+    // button
+    color("#303030") translate([0,0,4]) rotate([90,0,0]) cylinder(h = 1.7, d1=4, d2=3.4);
+}
+
+//tactButton();
+    
+
 //plt133t10w();
 //power_jack();
 
@@ -448,6 +473,10 @@ module theremin_pcb(pcb_width=60.96, pcb_length=210.82, pcb_thickness=1.6) {
     // plt133
     translate([spdif_out_dx,pcb_width/2,pcb_thickness]) rotate([0,0,180]) plt133t10w();
     translate([spdif_in_dx,pcb_width/2,pcb_thickness]) rotate([0,0,180]) plt133t10w();
+    
+    tact_button_dx = -28.895;
+    // tact button
+    translate([tact_button_dx,pcb_width/2,pcb_thickness]) rotate([0,0,180]) tactButton();
         
 //    # color("white") {          
 //        // front panel
@@ -457,6 +486,8 @@ module theremin_pcb(pcb_width=60.96, pcb_length=210.82, pcb_thickness=1.6) {
 //    }
 }
 
+//theremin_pcb();
+    
 module rear_panel_holes(pcb_thickness=1.6, pinheader_height=2.54+8.5) {
     
     // expression pedal 6.35mm audio jack
@@ -469,6 +500,10 @@ module rear_panel_holes(pcb_thickness=1.6, pinheader_height=2.54+8.5) {
     
     // power in
     translate([16.51,6.5,0]) circle(d=6.5+4);
+    
+    tact_button_dx = 28.895;
+    // tact button: program
+    translate([tact_button_dx,4,0]) circle(d=4.2);
 }
 
 //rear_panel_holes();
@@ -629,4 +664,4 @@ module front_panel(panel_width=120, panel_height=44, panel_thickness=1, pcb_dy=-
 
 //theremin_pcb();
 //# translate([0,-pcb_width/2,1.6]) front_panel();
-//    # translate([0,pcb_width/2,1.6]) rotate([0,0,180]) rear_panel();
+//# translate([0,pcb_width/2,1.6]) rotate([0,0,180]) rear_panel();
