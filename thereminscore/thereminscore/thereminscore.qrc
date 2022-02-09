@@ -1,0 +1,14 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>resources/icons/16x16/app-icon.png</file>
+    <file>resources/icons/16x16/document-new.png</file>
+    <file>resources/icons/16x16/document-open.png</file>
+    <file>resources/icons/16x16/document-save.png</file>
+    <file>resources/icons/16x16/application-exit.png</file>
+    <file>resources/icons/32x32/app-icon.png</file>
+    <file>resources/icons/32x32/document-new.png</file>
+    <file>resources/icons/32x32/document-open.png</file>
+    <file>resources/icons/32x32/document-save.png</file>
+    <file>resources/icons/32x32/application-exit.png</file>
+</qresource>
+</RCC>
