@@ -15,7 +15,7 @@ QSize VolumeEditWidget::minimumSizeHint() const
 }
 
 
-VolumeEditWidget::VolumeEditWidget(PitchAndVolumeTrack * data, QWidget *parent) : TrackWidgetBase(data, parent), _lastxpos(0)
+VolumeEditWidget::VolumeEditWidget(PitchAndVolumeTrack * data, QWidget *parent) : TrackWidgetBase(TRACK_VOLUME, data, parent)
 {
 
 }
@@ -103,41 +103,3 @@ void VolumeEditWidget::wheelEvent(QWheelEvent * event) {
     TrackWidgetBase::wheelEvent(event);
 }
 
-#define MAX_DB_PER_SECOND 250.0f
-#define MAX_VOLUME_VELOCITY (MAX_DB_PER_SECOND / SCORE_FRAME_RATE)
-
-void VolumeEditWidget::mouseMoveEvent(QMouseEvent *event) {
-    int x = event->pos().x();
-    int y = event->pos().y();
-    int xpos = xToPos(x);
-    float volume = yToGain(y);
-    if (event->buttons() & Qt::MouseButton::LeftButton) {
-        if (_lastxpos != xpos) {
-            // interpolate range
-            float startVolume = _data->get(_lastxpos).volume;
-            _data->setVolumeInterpolated(_lastxpos, startVolume, xpos, volume);
-            _lastxpos = xpos;
-        }
-        _data->setVolumeVelocityLimited(xpos, volume, MAX_VOLUME_VELOCITY);
-        event->accept();
-        update();
-    }
-}
-
-
-void VolumeEditWidget::mousePressEvent(QMouseEvent *event) {
-    int x = event->pos().x();
-    int y = event->pos().y();
-    int xpos = xToPos(x);
-    float volume = yToGain(y);
-    if (event->button() == Qt::MouseButton::LeftButton) {
-        _data->setVolumeVelocityLimited(xpos, volume, MAX_VOLUME_VELOCITY);
-        _lastxpos = xpos;
-        event->accept();
-        update();
-    }
-}
-
-void VolumeEditWidget::mouseReleaseEvent(QMouseEvent *event) {
-
-}

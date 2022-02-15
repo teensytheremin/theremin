@@ -23,9 +23,10 @@ uint32_t blendARGB(uint32_t cl1, uint32_t cl2, uint32_t alpha) {
 }
 
 
-TrackWidgetBase::TrackWidgetBase(PitchAndVolumeTrack * data, QWidget *parent) : QWidget(parent), _xlength(1000), _xposition(0), _xscale(2), _data(data)
+TrackWidgetBase::TrackWidgetBase(TrackComponent component, PitchAndVolumeTrack * data, QWidget *parent) : QWidget(parent), _component(component), _xlength(1000), _xposition(0), _xscale(2), _data(data), _drawingTool(nullptr)
 {
-
+    _lastxpos = 0;
+    _drawingToolActive = false;
 }
 
 void TrackWidgetBase::setXLength(int xlength) {
@@ -70,9 +71,87 @@ int TrackWidgetBase::xToPos(int x) {
     return x * _xscale + _xposition;
 }
 
+void TrackWidgetBase::mousePressEvent(QMouseEvent *event) {
+    int x = event->pos().x();
+    int y = event->pos().y();
+    int xpos = xToPos(x);
+    float value = yToValue(y);
+    if (event->button() == Qt::MouseButton::LeftButton) {
+        _data->setComponentValueLimited(TRACK_PITCH, xpos, value, maxVelocity(), maxAcceleration());
+        //_data->setPitchVelocityLimited(xpos, pitch, MAX_PITCH_VELOCITY);
+        _points.clear();
+        _points.append(IndexedFloat(xpos, value));
+        _drawingToolActive = true;
+        _lastxpos = xpos;
+        event->accept();
+        update();
+    }
+}
+
+
+void limitLastPoint(IndexedFloats & points, float maxVelocity) {
+    int len = points.length();
+    if (len < 2)
+        return;
+    IndexedFloat p1 = points[len - 2];
+    IndexedFloat p2 = points[len - 1];
+    int dist = p2.index - p1.index;
+    if (dist < 0)
+        dist = -dist;
+    float minlimit = p1.value - maxVelocity * dist;
+    float maxlimit = p1.value + maxVelocity * dist;
+    if (p2.value > maxlimit) {
+        p2.value = maxlimit;
+        points.set(len-1, p2);
+    } else if (p2.value < minlimit) {
+        p2.value = minlimit;
+        points.set(len-1, p2);
+    }
+}
+
+void TrackWidgetBase::mouseMoveEvent(QMouseEvent *event) {
+    int x = event->pos().x();
+    int y = event->pos().y();
+    int xpos = xToPos(x);
+    float value = clampValue(yToValue(y));
+    if (event->buttons() & Qt::MouseButton::LeftButton) {
+        if (!_points.length())
+            return;
+        int startpos = _points[0].index;
+        int dist = xpos - startpos;
+        if (!dist)
+            return;
+        while (_points.length() > 1) {
+            int lastpos = _points.last().index;
+            int lastdist = lastpos - startpos;
+            if (dist > 0 && dist > lastdist)
+                break;
+            if (dist < 0 && dist < lastdist)
+                break;
+            // remove last
+            _points.removeLast();
+        }
+        _points.append(IndexedFloat(xpos, value));
+        limitLastPoint(_points, maxVelocity());
+        //_data->setPitchVelocityLimited(xpos, pitch, MAX_PITCH_VELOCITY);
+        event->accept();
+        update();
+    }
+}
+
+
+void TrackWidgetBase::mouseReleaseEvent(QMouseEvent *event) {
+    // TODO:
+    if (_drawingToolActive) {
+        _data->fillInterpolated(_component, _points, maxVelocity(), maxAcceleration());
+        _drawingToolActive = false;
+    }
+    update();
+}
+
 void TrackWidgetBase::wheelEvent(QWheelEvent * event) {
-    int x = event->x();
-    int y = event->y();
+    int x = event->position().toPoint().x();
+    int y = event->position().toPoint().y();
     Qt::MouseButtons mouseFlags = event->buttons();
     Qt::KeyboardModifiers keyFlags = event->modifiers();
     QPoint angleDelta = event->angleDelta();
@@ -108,7 +187,7 @@ void TrackWidgetBase::wheelEvent(QWheelEvent * event) {
         if (newScale < 1.0f)
             newScale = 1.0f;
         int newIScale = (int)(newScale + 0.5f);
-        int x = event->x();
+        //int x = event->pos().x();
         int oldpos = _xposition + x * _xscale;
         int newpos = _xposition + x * newIScale;
         int posCorrection = oldpos - newpos;
@@ -148,7 +227,7 @@ void TrackWidgetBase::drawMeterMarks(QPainter & painter) {
     int h = height();
 
     QBrush mainTickBrush(QColor(255,255,192,96));
-    QBrush secondaryTickBrush(QColor(140,140,128,48));
+    QBrush secondaryTickBrush(QColor(160,160,140,64));
 
     for (;;) {
         int pos = (int)(_data->secondsToPos(time) + 0.5f);
@@ -219,4 +298,58 @@ int TrackWidgetBase::isVScaleEvent(QWheelEvent * event) {
         return angleDelta.y();
     }
     return 0;
+}
+
+/// convert value to widget Y coordinate
+int TrackWidgetBase::valueToY(float value) const {
+    float top = topValue();
+    float bottom = bottomValue();
+    return static_cast<int>(height() * (value - top) / (bottom - top));
+}
+
+/// convert widget Y coordinate to value
+float TrackWidgetBase::yToValue(int y) const {
+    float top = topValue();
+    float bottom = bottomValue();
+    if (height() <= 0)
+        return bottom;
+    return top + y * (bottom - top) / height();
+}
+
+float TrackWidgetBase::maxVelocity() {
+    return valueRange() * _drawingTool->maxVelocity;
+}
+
+float TrackWidgetBase::maxAcceleration() {
+    return valueRange() * _drawingTool->maxAcceleration;
+}
+
+void TrackWidgetBase::drawEditLines(QPainter & painter) {
+    if (!_drawingToolActive || _points.length() < 2)
+        return;
+
+    int penWidth = 2;
+    Qt::PenStyle style = Qt::PenStyle(Qt::SolidLine);
+    Qt::PenCapStyle cap = Qt::PenCapStyle(Qt::RoundCap);
+    Qt::PenJoinStyle join = Qt::PenJoinStyle(Qt::RoundJoin);
+    QPen pen(QColor(255, 128, 128), penWidth, style, cap, join);
+    painter.setPen(pen);
+
+    //
+    QVector<QPointF> points;
+    float lastX = -1;
+    float lastY = -1;
+    for (int i = 0; i < _points.length(); i++) {
+        IndexedFloat data = _points[i];
+        int pointX = posToX(data.index);
+        int pointY = valueToY(data.value);
+        float deltax = abs(pointX - lastX);
+        float deltay = abs(pointY - lastY);
+        if (deltax > 0.5f || deltay > 0.5f) {
+            points.append(QPointF(pointX, pointY));
+            lastX = pointX;
+            lastY = pointY;
+        }
+    }
+    painter.drawPolyline(points);
 }

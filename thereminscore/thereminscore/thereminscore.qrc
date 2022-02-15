@@ -5,10 +5,44 @@
     <file>resources/icons/16x16/document-open.png</file>
     <file>resources/icons/16x16/document-save.png</file>
     <file>resources/icons/16x16/application-exit.png</file>
+    <file>resources/icons/16x16/media-playback-start.png</file>
+    <file>resources/icons/16x16/media-playback-stop.png</file>
+    <file>resources/icons/16x16/media-playback-pause.png</file>
+    <file>resources/icons/16x16/media-seek-backward.png</file>
+    <file>resources/icons/16x16/media-seek-forward.png</file>
+    <file>resources/icons/16x16/media-skip-backward.png</file>
+    <file>resources/icons/16x16/media-skip-forward.png</file>
+    <file>resources/icons/16x16/edit-copy.png</file>
+    <file>resources/icons/16x16/edit-cut.png</file>
+    <file>resources/icons/16x16/edit-delete.png</file>
+    <file>resources/icons/16x16/edit-find.png</file>
+    <file>resources/icons/16x16/edit-paste.png</file>
+    <file>resources/icons/16x16/edit-undo.png</file>
+    <file>resources/icons/16x16/edit-redo.png</file>
+    <file>resources/icons/16x16/draw-point1.png</file>
+    <file>resources/icons/16x16/draw-point2.png</file>
+    <file>resources/icons/16x16/draw-point3.png</file>
     <file>resources/icons/32x32/app-icon.png</file>
     <file>resources/icons/32x32/document-new.png</file>
     <file>resources/icons/32x32/document-open.png</file>
     <file>resources/icons/32x32/document-save.png</file>
     <file>resources/icons/32x32/application-exit.png</file>
+    <file>resources/icons/32x32/media-playback-start.png</file>
+    <file>resources/icons/32x32/media-playback-stop.png</file>
+    <file>resources/icons/32x32/media-playback-pause.png</file>
+    <file>resources/icons/32x32/media-seek-backward.png</file>
+    <file>resources/icons/32x32/media-seek-forward.png</file>
+    <file>resources/icons/32x32/media-skip-backward.png</file>
+    <file>resources/icons/32x32/media-skip-forward.png</file>
+    <file>resources/icons/32x32/edit-copy.png</file>
+    <file>resources/icons/32x32/edit-cut.png</file>
+    <file>resources/icons/32x32/edit-delete.png</file>
+    <file>resources/icons/32x32/edit-find.png</file>
+    <file>resources/icons/32x32/edit-paste.png</file>
+    <file>resources/icons/32x32/edit-undo.png</file>
+    <file>resources/icons/32x32/edit-redo.png</file>
+    <file>resources/icons/32x32/draw-point1.png</file>
+    <file>resources/icons/32x32/draw-point2.png</file>
+    <file>resources/icons/32x32/draw-point3.png</file>
 </qresource>
 </RCC>

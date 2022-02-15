@@ -18,14 +18,25 @@ signals:
 protected:
     void paintEvent(QPaintEvent *event) override;
     void wheelEvent(QWheelEvent * event) override;
-    void mouseMoveEvent(QMouseEvent *event) override;
-    void mousePressEvent(QMouseEvent *event) override;
-    void mouseReleaseEvent(QMouseEvent *event) override;
 
     float yToGain(int y) const;
     int gainToY(float pitch) const;
-
-    int _lastxpos;
+    /// minimum possible value
+    float minValue() const override {
+        return MIN_VOLUME_DB;
+    }
+    /// max possible value
+    float maxValue() const  override {
+        return MAX_VOLUME_DB;
+    }
+    /// value corresponding to top pixel of view
+    float topValue() const override {
+        return MAX_VOLUME_DB;
+    }
+    /// value corresponding to bottom pixel of view
+    float bottomValue() const override {
+        return MIN_VOLUME_DB;
+    }
 };
 
 #endif // VOLUMEEDITWIDGET_H

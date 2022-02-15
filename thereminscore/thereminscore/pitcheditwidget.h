@@ -15,24 +15,37 @@ public:
     QSize minimumSizeHint() const override;
     QSize sizeHint() const override;
 
-    float yToPitch(int y) const;
-    int pitchToY(float pitch) const;
-    float minPitch() const { return _minpitch; }
-    float maxPitch() const { return _maxpitch; }
-    float pitchRange() const { return _maxpitch - _minpitch; }
+//    float yToPitch(int y) const { return yToValue(y); }
+//    int pitchToY(float pitch) const { return valueToY(pitch); }
+//    float minPitch() const { return _minpitch; }
+//    float maxPitch() const { return _maxpitch; }
+    //float pitchRange() const { return _maxpitch - _minpitch; }
     void setNoteRange(float minPitch, float maxPitch);
+
+    /// minimum possible value
+    float minValue() const override {
+        return MIN_NOTE;
+    }
+    /// max possible value
+    float maxValue() const  override {
+        return MAX_NOTE;
+    }
+    /// value corresponding to top pixel of view
+    float topValue() const override {
+        return _maxpitch;
+    }
+    /// value corresponding to bottom pixel of view
+    float bottomValue() const override {
+        return _minpitch;
+    }
 signals:
     void pitchRangeChanged(float minPitch, float maxPitch);
 protected:
     void paintEvent(QPaintEvent *event) override;
     void wheelEvent(QWheelEvent * event) override;
-    void mouseMoveEvent(QMouseEvent *event) override;
-    void mousePressEvent(QMouseEvent *event) override;
-    void mouseReleaseEvent(QMouseEvent *event) override;
 private:
     float _minpitch;
     float _maxpitch;
-    int _lastxpos;
 };
 
 #endif // PITCHEDITWIDGET_H

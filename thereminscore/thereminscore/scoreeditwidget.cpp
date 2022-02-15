@@ -17,7 +17,7 @@ void initTrack(PitchAndVolumeTrack & track, int len) {
     }
 }
 
-ScoreEditWidget::ScoreEditWidget(QWidget *parent) : QWidget(parent), _xlength(10000), _xposition(0), _xscale(16), _hscrollDiv(1)
+ScoreEditWidget::ScoreEditWidget(QWidget *parent) : QWidget(parent), _drawingTool(nullptr), _xlength(10000), _xposition(0), _xscale(16), _hscrollDiv(1)
 {
     initTrack(_track, 20000);
     _xlength = 20000;
@@ -63,7 +63,7 @@ ScoreEditWidget::ScoreEditWidget(QWidget *parent) : QWidget(parent), _xlength(10
     setLayout(mainLayout);
 
 
-    pitchRangeChanged(_pitchEditWidget->minPitch(), _pitchEditWidget->maxPitch());
+    pitchRangeChanged(_pitchEditWidget->bottomValue(), _pitchEditWidget->topValue());
 
     _volumeVScrollBar->setSliderPosition(0);
     _volumeVScrollBar->setMinimum(0);
@@ -129,7 +129,7 @@ void ScoreEditWidget::onHScroll(int pos) {
 void ScoreEditWidget::onPitchVScroll(int pos) {
 
 //    int pitchPosition = static_cast<int>((127 - _pitchEditWidget->maxPitch())*16 + 0.5f);
-      int ipitchRange = static_cast<int>((_pitchEditWidget->maxPitch() - _pitchEditWidget->minPitch())*16 + 0.5f);
+      int ipitchRange = static_cast<int>((_pitchEditWidget->topValue() - _pitchEditWidget->bottomValue())*16 + 0.5f);
       int imaxPos = 127 * 16 - ipitchRange;
 
 
@@ -141,7 +141,7 @@ void ScoreEditWidget::onPitchVScroll(int pos) {
 
 
     // top note
-    float pitchRange = _pitchEditWidget->maxPitch() - _pitchEditWidget->minPitch();
+    float pitchRange = _pitchEditWidget->topValue() - _pitchEditWidget->bottomValue();
     //float minValue = 0;
     float maxValue = 127.0f - pitchRange;
 
@@ -176,4 +176,10 @@ void ScoreEditWidget::xScaleChanged(float scale) {
     _xscale = _pitchEditWidget->xScale();
 
     updateHScroll();
+}
+
+void ScoreEditWidget::setDrawingTool(DrawingTool * tool) {
+    _drawingTool = tool;
+    _pitchEditWidget->setDrawingTool(tool);
+    _volumeEditWidget->setDrawingTool(tool);
 }

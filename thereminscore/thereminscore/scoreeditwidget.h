@@ -13,6 +13,8 @@ class ScoreEditWidget : public QWidget
     Q_OBJECT
 public:
     explicit ScoreEditWidget(QWidget *parent = nullptr);
+    void setDrawingTool(DrawingTool * tool);
+    DrawingTool * getDrawingTool() { return _drawingTool; }
 
 signals:
 public slots:
@@ -29,6 +31,7 @@ protected:
     QScrollBar * _volumeVScrollBar;
 
     PitchAndVolumeTrack _track;
+    DrawingTool * _drawingTool;
 
     int _xlength;
     int _xposition;

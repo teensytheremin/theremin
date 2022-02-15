@@ -4,9 +4,8 @@
 #include <QPen>
 #include <QWheelEvent>
 
-PitchEditWidget::PitchEditWidget(PitchAndVolumeTrack * data, QWidget *parent) : TrackWidgetBase(data, parent),
-    _minpitch(23.5), _maxpitch(48.5), _lastxpos(0)
-//  _minpitch(47.5), _maxpitch(72.5)
+PitchEditWidget::PitchEditWidget(PitchAndVolumeTrack * data, QWidget *parent) : TrackWidgetBase(TRACK_PITCH, data, parent),
+    _minpitch(43.5), _maxpitch(68.5)
 {
 
 }
@@ -20,16 +19,6 @@ QSize PitchEditWidget::sizeHint() const
 QSize PitchEditWidget::minimumSizeHint() const
 {
     return QSize(600, 300);
-}
-
-int PitchEditWidget::pitchToY(float pitch) const {
-    return static_cast<int>(height() * (pitch - _maxpitch) / (_minpitch - _maxpitch));
-}
-
-float PitchEditWidget::yToPitch(int y) const {
-    if (height() <= 0)
-        return _minpitch;
-    return _maxpitch + y * (_minpitch - _maxpitch) / height();
 }
 
 void PitchEditWidget::setNoteRange(float minPitch, float maxPitch) {
@@ -293,12 +282,12 @@ void PitchEditWidget::paintEvent(QPaintEvent * /* event */)
     painter.fillRect(QRect(0, 0, w, h), brush);
     //int y0 = 0;
     for (int y = 0; y < h; y++) {
-        float note = yToPitch(y);
+        float note = yToValue(y);
         int noteMul128 = static_cast<int>((note + 0.5f) * 128.0f);
         uint32_t bgColor = getNoteBackgroundColor(noteMul128);
         int inote = static_cast<int>(note + 0.5f);
         //int inotefrac = (static_cast<int>((note + 0.5f) * 16)) & 15;
-        int noteMiddleY = pitchToY(inote);
+        int noteMiddleY = valueToY(inote);
         //float nextnote = yToPitch(y + 1);
         //int inextnote = static_cast<int>(nextnote + 0.5f);
         bool isMiddleLine = (y == noteMiddleY);
@@ -333,20 +322,20 @@ void PitchEditWidget::paintEvent(QPaintEvent * /* event */)
     dimTail(painter);
     drawMeterMarks(painter);
 
-    float topnote = yToPitch(0);
-    float bottomnote = yToPitch(height());
+    float topnote = yToValue(0);
+    float bottomnote = yToValue(height());
     int itopnote = static_cast<int>(topnote);
     int ibottomnote = static_cast<int>(bottomnote);
     painter.setPen(QPen(QColor(220, 255, 255, 140)));
     //painter.setBrush(QBrush(QColor(220, 220, 220, 140)));
     QFontMetrics metrics(painter.font());
     int fontH = metrics.height();
-    float fontHNotes = topnote - yToPitch(0 + fontH);
+    float fontHNotes = topnote - yToValue(0 + fontH);
     for (int i = ibottomnote; i <= itopnote; i++ ) {
         int octave = i / 12;
         int noteInsideOctave = i % 12;
         if (noteInsideOctave == 0 || (noteInsideOctave == 4 && fontHNotes<4.5) || (noteInsideOctave == 9 && fontHNotes < 2.5)) {
-            int y = pitchToY(i);
+            int y = valueToY(i);
             QString text = QString("%1%2").arg(NOTE_NAMES[noteInsideOctave], QString::number(octave-1));
             QSize sz = metrics.size(Qt::TextSingleLine, text);
             painter.drawText(QRect(w - sz.width(), y - metrics.height()/2, sz.width(), sz.height()), text); //Qt::AlignVCenter,
@@ -354,11 +343,13 @@ void PitchEditWidget::paintEvent(QPaintEvent * /* event */)
         }
     }
 
+    drawEditLines(painter);
+
 }
 
 void PitchEditWidget::wheelEvent(QWheelEvent * event) {
-    int x = event->x();
-    int y = event->y();
+    int x = event->position().toPoint().x();
+    int y = event->position().toPoint().y();
     Qt::MouseButtons mouseFlags = event->buttons();
     Qt::KeyboardModifiers keyFlags = event->modifiers();
     QPoint angleDelta = event->angleDelta();
@@ -367,7 +358,7 @@ void PitchEditWidget::wheelEvent(QWheelEvent * event) {
     int vScrollDelta = isVScrollEvent(event);
     if (vScrollDelta) {
         // vertical scroll
-        float notesPerPixel = pitchRange() / height();
+        float notesPerPixel = visibleValueRange() / height();
         float notesDelta = vScrollDelta * notesPerPixel;
         setNoteRange(_minpitch + notesDelta, _maxpitch + notesDelta);
         emit pitchRangeChanged(_minpitch, _maxpitch);
@@ -419,43 +410,4 @@ void PitchEditWidget::wheelEvent(QWheelEvent * event) {
         return;
     }
     TrackWidgetBase::wheelEvent(event);
-}
-
-#define MAX_HALFNOTES_PER_SECOND 150.0f
-#define MAX_PITCH_VELOCITY (MAX_HALFNOTES_PER_SECOND / SCORE_FRAME_RATE)
-
-void PitchEditWidget::mouseMoveEvent(QMouseEvent *event) {
-    int x = event->pos().x();
-    int y = event->pos().y();
-    int xpos = xToPos(x);
-    float pitch = yToPitch(y);
-    if (event->buttons() & Qt::MouseButton::LeftButton) {
-        if (_lastxpos != xpos) {
-            // interpolate range
-            float startNote = _data->get(_lastxpos).note;
-            _data->setPitchInterpolated(_lastxpos, startNote, xpos, pitch);
-            _lastxpos = xpos;
-        }
-        _data->setPitchVelocityLimited(xpos, pitch, MAX_PITCH_VELOCITY);
-        event->accept();
-        update();
-    }
-}
-
-
-void PitchEditWidget::mousePressEvent(QMouseEvent *event) {
-    int x = event->pos().x();
-    int y = event->pos().y();
-    int xpos = xToPos(x);
-    float pitch = yToPitch(y);
-    if (event->button() == Qt::MouseButton::LeftButton) {
-        _data->setPitchVelocityLimited(xpos, pitch, MAX_PITCH_VELOCITY);
-        _lastxpos = xpos;
-        event->accept();
-        update();
-    }
-}
-
-void PitchEditWidget::mouseReleaseEvent(QMouseEvent *event) {
-
 }

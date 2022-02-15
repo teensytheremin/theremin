@@ -35,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent)
     _fileMenu = menuBar()->addMenu(tr("&File"));
     _editMenu = menuBar()->addMenu(tr("&Edit"));
     _viewMenu = menuBar()->addMenu(tr("&View"));
+    _playMenu = menuBar()->addMenu(tr("&Play"));
+    _drawMenu = menuBar()->addMenu(tr("&Draw"));
 
 
     _actionFileNew = new QAction(iconFromResource("document-new"), tr("&New"), this);
@@ -61,15 +63,109 @@ MainWindow::MainWindow(QWidget *parent)
     _fileMenu->addAction(_actionFileOpen);
     _fileMenu->addAction(_actionFileSave);
     _fileMenu->addAction(_actionFileSaveAs);
+    _fileMenu->addSeparator();
     _fileMenu->addAction(_actionFileExit);
 
-    QToolBar *fileToolBar = addToolBar(tr("File"));
-    fileToolBar->setIconSize(QSize(24,24));
+    _actionEditUndo = new QAction(iconFromResource("edit-undo"), tr("&Undo"), this);
+    _actionEditUndo->setShortcuts(QKeySequence::Undo);
+    _actionEditUndo->setStatusTip(tr("Undo"));
+
+    _actionEditRedo = new QAction(iconFromResource("edit-redo"), tr("Redo"), this);
+    _actionEditRedo->setShortcuts(QKeySequence::Redo);
+    _actionEditRedo->setStatusTip(tr("Redo"));
+
+    _editMenu->addAction(_actionEditUndo);
+    _editMenu->addAction(_actionEditRedo);
+
+    _actionPlayStart = new QAction(iconFromResource("media-playback-start"), tr("Play"), this);
+    _actionPlayStart->setStatusTip(tr("Playback start"));
+
+    _actionPlayStop = new QAction(iconFromResource("media-playback-stop"), tr("Stop"), this);
+    _actionPlayStop->setStatusTip(tr("Playback start"));
+
+    _actionPlayPause = new QAction(iconFromResource("media-playback-pause"), tr("Pause"), this);
+    _actionPlayPause->setStatusTip(tr("Playback start"));
+
+    _playMenu->addAction(_actionPlayStart);
+    _playMenu->addAction(_actionPlayPause);
+    _playMenu->addAction(_actionPlayStop);
+
+    QActionGroup * drawGroup = new QActionGroup(this);
+    //drawGroup->
+    _actionDrawPoint1 = new QAction(iconFromResource("draw-point1"), tr("Point Narrow"), this);
+    _actionDrawPoint1->setStatusTip(tr("Draw point narrow"));
+    _actionDrawPoint1->setActionGroup(drawGroup);
+    _actionDrawPoint1->setCheckable(true);
+    _actionDrawPoint1->setChecked(true);
+    _actionDrawPoint2 = new QAction(iconFromResource("draw-point2"), tr("Point Medium"), this);
+    _actionDrawPoint2->setStatusTip(tr("Draw point medium"));
+    _actionDrawPoint2->setActionGroup(drawGroup);
+    _actionDrawPoint2->setCheckable(true);
+    _actionDrawPoint3 = new QAction(iconFromResource("draw-point3"), tr("Point Wide"), this);
+    _actionDrawPoint3->setStatusTip(tr("Draw point wide"));
+    _actionDrawPoint3->setActionGroup(drawGroup);
+    _actionDrawPoint3->setCheckable(true);
+
+    _drawMenu->addAction(_actionDrawPoint1);
+    _drawMenu->addAction(_actionDrawPoint2);
+    _drawMenu->addAction(_actionDrawPoint3);
+
+    QToolBar *fileToolBar = createToolBar(tr("File"));
     fileToolBar->addAction(_actionFileNew);
     fileToolBar->addAction(_actionFileOpen);
     fileToolBar->addAction(_actionFileSave);
-    //fileToolBar->addAction(_actionFileExit);
 
+    QToolBar *playToolBar = createToolBar(tr("Play"));
+    playToolBar->addAction(_actionPlayStart);
+    playToolBar->addAction(_actionPlayPause);
+    playToolBar->addAction(_actionPlayStop);
+
+    QToolBar *editToolBar = createToolBar(tr("Edit"));
+    editToolBar->addAction(_actionEditUndo);
+    editToolBar->addAction(_actionEditRedo);
+
+    QToolBar *drawToolBar = createToolBar(tr("Draw"));
+    drawToolBar->addAction(_actionDrawPoint1);
+    drawToolBar->addAction(_actionDrawPoint2);
+    drawToolBar->addAction(_actionDrawPoint3);
+
+    _drawingTools[0].toolType = DRAW_POINT;
+    _drawingTools[0].maxVelocity = 0.01f;
+    _drawingTools[0].maxAcceleration = 0.001f;
+
+    _drawingTools[1].toolType = DRAW_POINT;
+    _drawingTools[1].maxVelocity = 0.001f;
+    _drawingTools[1].maxAcceleration = 0.0001f;
+
+    _drawingTools[2].toolType = DRAW_POINT;
+    _drawingTools[2].maxVelocity = 0.0003f;
+    _drawingTools[2].maxAcceleration = 0.00003f;
+
+    _scoreEditWidget->setDrawingTool(&_drawingTools[0]);
+    connect(_actionDrawPoint1, &QAction::toggled,
+            [=](bool checked) {
+                    if (checked) _scoreEditWidget->setDrawingTool(&_drawingTools[0]);
+                }
+            );
+    connect(_actionDrawPoint2, &QAction::toggled,
+            [=](bool checked) {
+                    if (checked) _scoreEditWidget->setDrawingTool(&_drawingTools[1]);
+                }
+            );
+    connect(_actionDrawPoint3, &QAction::toggled,
+            [=](bool checked) {
+                    if (checked) _scoreEditWidget->setDrawingTool(&_drawingTools[2]);
+                }
+            );
+}
+
+QToolBar * MainWindow::createToolBar(QString name) {
+    QToolBar *tb = addToolBar(name);
+    tb->setFloatable(false);
+    tb->setAllowedAreas(Qt::ToolBarArea::LeftToolBarArea);
+    addToolBar(Qt::ToolBarArea::LeftToolBarArea, tb);
+    tb->setIconSize(QSize(24,24));
+    return tb;
 }
 
 MainWindow::~MainWindow()
